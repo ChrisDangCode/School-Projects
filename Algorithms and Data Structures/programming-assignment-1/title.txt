@@ -1,0 +1,495 @@
+#===============================================================================
+# Programming Assignment 1
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+
+1.1 Program Implementation Description:
+
+My program uses an array based heap, similar to the implementation provided by
+the notes and text. It uses a customer and heap class. The program will:
+Read in the file into a list, create a heap, sort the heap, and display the names.
+
+My execution uses the following items:
+A file IO object, a list, 2 integers, 1 string, 1 heap.
+
+1.2 Known Bugs:
+
+None to the best of my knowledge. 
+
+1.3 Style Guidelines:
+Functions are all lower cased and seperated with underscores for multi-word functions.
+Variables are camel cased.
+Indentation is done to conform to Python syntax requirements.
+
+1.4 Innovations:
+Input file does not require the use of the 
+preceding "customer_#:" nor "customer_#_priority:" tags. 
+This shouldn't improve performance, but will make data entry easier for 
+the front end user.
+
+1.5 Terminal Session Script and Source Code:
+See readme for screen cap; It is in the subdirectory.
+
+#===============================================================================
+# Programming Assignment 1, part A
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+import math #import for floor function
+
+
+class customer:
+        __val = None
+        __name = ""
+
+        def __str__(self):
+                return "Name = {}Priority Value = {}\n".format(self.__name, self.__val) 
+        
+        def __init__(self, val, name): # constructor
+                self.__val = val
+                self.__name = name
+                
+        def set_val(self, val):
+                self.__val = val
+                
+        def get_val(self):
+                return self.__val
+
+        def set_name(self, name):
+                self.__name = name
+                
+        def get_name(self):
+                return self.__name
+
+        def printName(self):
+                print self.__name
+
+        # overloaded functions for comparisons
+        def __lt__(self, item): # overloaded <
+                return self.__val < item
+        
+        def __gt__(self, item): # overloaded >
+                return self.__val > item
+
+        def __le__(self, item): # overloaded <=
+                if isinstance(item, customer):
+                        return self.__val <= item.__val
+                elif isinstance(item, (int, float)):
+                        return self.__val <= item
+                else:
+                        return NotImplemented
+                        
+        def __ge__(self, item): # overloaded >=
+                if isinstance(item, customer):
+                        return self.__val >= item.__val
+                elif isinstance(item, (int, float)):
+                        return self.__val >= item
+                else:
+                        return NotImplemented
+
+# array based heap that similates a tree
+# array is buffered with a 0 in the beginning for ease of implementation
+class heap:
+        __tree = []
+        
+        def __init__(self, theList):    # constructor
+                self.__tree = [0] + theList
+
+        def parent(self, index):
+                return math.floor(i/2)
+
+        def left(self, index):
+                return 2 * index
+
+        def right(self, index):
+                return 2 * index + 1
+
+        def heap_size(self):
+                return len(self.__tree) - 1
+
+
+
+        def print_names(self):          # print list of customer names
+                for i in range(1 , self.heap_size()+1):
+                        print self.__tree[i]
+
+        # heapify based from notes and text book
+        def heapify(self, index):
+                l = self.left(index)
+                r = self.right(index)
+
+                # find largest amongst suubtree
+                if l <= self.heap_size() and self.__tree[l] > self.__tree[index]: 
+                        largest = l
+
+                else:
+                        largest = index
+
+                if r <= self.heap_size() and self.__tree[r] > self.__tree[largest]:
+                        largest = r
+
+                
+                if largest != index:
+                        self.__tree[index], self.__tree[largest] = self.__tree[largest], self.__tree[index] # exchange
+                        self.heapify(largest) # recur
+
+        # build heap based from notes and text book
+        def build_heap(self):
+                for i in range(int(math.floor(self.heap_size()/2)), 0, -1):
+                        self.heapify(i)
+
+        # heap sort based from notes and text book
+        def heap_sort(self):
+
+                newList = []
+                self.build_heap()
+                for i in range(self.heap_size(), 0, -1):
+                        newList.append(self.maximum())
+                        self.__tree[1], self.__tree[i] = self.__tree[i], self.__tree[1]
+                        del self.__tree[self.heap_size()]
+                        self.heapify(1)
+                        
+                self.__tree = [0] + newList
+                   
+                        
+        def insert(self, customer):
+                self.__tree.append(customer)
+                self.heap_sort()
+
+        def maximum(self):
+                return self.__tree[1]
+
+        def extract_max(self):
+                maxVal = self.maximum() # store maximum for return
+
+                self.__tree[1], self.__tree[self.heap_size()] = self.__tree[self.heap_size()], self.__tree[1] # swap root to bottem
+                del self.__tree[len(self.__tree) - 1] # delete the leaf that contains the root after swap
+                self.heap_sort() # sort to restore heap property
+
+                return maxVal
+
+
+
+customersFile = open("customers_info.txt", "r") # get file
+custList = []
+count = 1
+name = ""
+val = 0
+for line in customersFile:
+
+        if count % 2 == 1:      # odd line number?
+                name = line     # get the name
+                count = count + 1
+
+        else:                   # even line number?
+                val = int(line) # get the priority value
+                custList.append(customer(val, name)) # append to the list!
+                count = count + 1
+
+myHeap = heap(custList)
+myHeap.build_heap()     
+myHeap.heap_sort()
+
+print "List of Customers According to their Priority:"
+print "==============================================================================="
+myHeap.print_names()
+
+
+
+
+customersFile.close()
+
+
+
+
+
+
+
+
+
+
+
+
+1.1 Program Implementation Description:
+
+My program is based from the algorithm given in the notes. It does the following:
+Takes in content from a file, counts and sorts the contents, and builds the heap
+from the bottom up, using the lowest values and adding them up.
+
+My execution uses the following items:
+A file IO object, 1 string.
+
+1.2 Known Bugs:
+
+See comments in code; Not a bug, but my display was not fully implemented.
+
+1.3 Style Guidelines:
+Functions are all lower cased and seperated with underscores for multi-word functions.
+Variables are camel cased.
+Indentation is done to conform to Python syntax requirements.
+
+1.4 Innovations:
+None that I can think of.
+
+1.5 Terminal Session Script and Source Code:
+See readme for screen cap; It is in the subdirectory.
+
+#===============================================================================
+# Programming Assignment 1, part B
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+import collections
+
+#string for testing
+#sampleChar = "ffffeeeeeeeeefccccccccccccbbbbbbbbbbbbbddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ 
+
+
+class node:
+        __val = None    # val contains a number
+        __name = None   # name contains a string, the char to be encoded
+        __left = None
+        __right = None
+
+        def __str__(self):
+                return "Char: {}. Occurs:{}".format(self.__name, self.__val)
+
+        def __repr__(self):
+                return "Char: {}. Occurs:{}".format(self.__name, self.__val) 
+        
+        def __init__(self, val, name = None): # node constructor
+                self.__val = val
+                self.__name = name
+        
+        # node setters, getters, and removes
+        def set_val(self, val):
+                self.__val = val
+        
+        def get_val(self):              
+                return self.__val
+
+        def set_name(self, name):
+                self.__name = name
+        
+        def get_name(self):
+                return self.__name
+        
+        def set_left(self, left):
+                self.__left = left
+        
+        def get_left(self):
+                return self.__left
+
+        def remove_left(self):
+                self.__left = None
+
+        def set_right(self, right):
+                self.__right = right
+        
+        def get_right(self):
+                return self.__right
+
+        def remove_right(self):
+                self.__right = None
+
+        # print content of node
+        def printCont(self):
+                print "  Val:", self.__val
+                print " left:", self.__left
+                print "right:", self.__right
+
+        # print node for tree
+        def printNode(self):
+                print "       ", self.__val, "     "
+                print self.__left, "     ", self.__right
+
+
+def build_table(myStr):
+        myList = collections.Counter(myStr)
+        myList = myList.most_common()[::-1] # reverse
+
+        newList = []
+        for i in range(0, len(myList)):
+                newList.append(node(myList[i][1],myList[i][0]))
+        
+        #for i in range(0, len(newList)):
+        #        print newList[i]
+
+   
+        while len(newList) > 0:
+                if len(newList) == 1:           # done?
+                        return newList[0]       # return list
+                else:
+                        item1, item2 = newList[0], newList[1]
+                        del newList[0:2]
+                        bigNode = node(item1.get_val() + item2.get_val())
+                        bigNode.set_left(item1)
+                        bigNode.set_right(item2)
+                        newList = sorted([bigNode] + newList, key = node.get_val)
+
+# Read me please!
+# Descrption of what display_codes was meant to do:
+# Display codes was to use a list containing the keys with their values.
+# Starting with the first element, it would recursilvely traverse the tree,
+# appending '0' or '1' to the code variable if it went left or right, respectively.
+# Once it found the key, it would stop traversal, display the code,
+# remove the first item of the list, and continue with the redacted list.
+# This would continue until empty.
+              
+##
+##def display_codes(myStr, table):
+##        myList = collections.Counter(myStr)
+##        myList = myList.most_common()[::-1] # reverse
+##
+##        i = 0
+##        while len(myList) != 0:
+##                code = ""
+##                if table[0].get_left() == myList[i][0]:
+##                        code = code + "0"
+##                else if table[0].get_right() == myList[i][0]:
+##                        code = code + "1"
+##                else:
+##
+
+
+charFile = open("char_info.txt")
+myString = charFile.read() # read file and hope the memory doesn't run out.
+
+
+# Display to show that the tree is correct in construction
+build_table(myString).printNode()
+build_table(myString).get_right().printNode()
+build_table(myString).get_right().get_left().printNode()
+build_table(myString).get_right().get_right().printNode()
+build_table(myString).get_right().get_right().get_left().printNode()
+
+
+charFile.close()
+
+
+
+
+1.1 Program Implementation Description:
+
+My program uses the KMP from lecture and notes. It will generate the next table
+for the large string (labeled: "inString"). Using that, the stringMatch function
+will find the starting index (if it exists) of the first instance of the substring
+inside the large string.
+
+My execution uses the following items:
+A file IO object, 2 strings.
+
+1.2 Known Bugs:
+
+None to the best of my knowledge. 
+
+1.3 Style Guidelines:
+Functions and Variables are camel cased.
+Indentation is done to conform to Python syntax requirements.
+
+1.4 Innovations:
+None that I can think of.
+
+1.5 Terminal Session Script and Source Code:
+See readme for screen cap; It is in the subdirectory.
+
+#===============================================================================
+# Programming Assignment 1, part C
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+
+#strings for testing
+#inString = "abaabababbabababbababaa"
+#subStr = "ababbababaa"
+
+
+
+# Function developed from next algorithm from notes
+def computeNext(inString):
+
+  newInString = [0] + list(inString) # buffer with  0 for ease implementation
+
+  m = len(newInString)
+
+  nextT = []
+
+  for i in range(0, m): # zero out next table
+    nextT.append(0)
+  
+  nextT[1] = -1 # initialize according to lecture
+  nextT[2] = 0
+
+  for i in range (3, m):
+    j = nextT[i-1]+1
+
+    while newInString[i-1] != newInString[j] and j > 0:
+      j = nextT[j]+1
+      
+    nextT[i] = j
+
+  return nextT[1:len(nextT)] #splice to get proper next table
+
+
+
+# Function developed from string match algorithm from notes
+def stringMatch(inString, subStr):
+
+  newInString = [0] + list(inString)  
+  newSubStr = [0] + list(subStr)
+  
+  n = len(inString)
+  m = len(subStr)
+
+  
+  nextArr = [0] + computeNext(subStr) # buffer with  0 for ease implementation
+
+  j = 1
+  i = 1
+  start = 0
+
+  while start == 0 and i <= n:
+    if newSubStr[j] == newInString[i]: # strings match?
+      j = j + 1 # Yes: increment pointers
+      i = i + 1
+
+    else:
+      j = nextArr[j] + 1 # No: move along
+      if i == 0:
+        j = 1 
+        i = i + 1
+
+    if j == m + 1:
+      start = i - m
+
+  return start
+
+
+
+stringFile = open("string_info.txt")
+inString = stringFile.readline()      # first line contains the whole string
+subStr = stringFile.readline()        # second line contains the substring to be matched in the whole string
+
+
+
+# dislay
+print "START = ", stringMatch(inString, subStr)
+
+
+
+    
+

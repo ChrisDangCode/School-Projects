@@ -1,0 +1,559 @@
+#===============================================================================
+# Programming Assignment 2
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+
+1.1 Program Implementation Description:
+My programs implement Kruskal's and Prim's algorithms based from the notes 
+and text. Kruskal uses a Union Find (UF) class which uses a list and a counter.
+Prim's uses a list and and an adjancy matrix.
+
+My execution uses the following items:
+Kruskal: A file IO object, 4 lists.
+Prim: A file IO object, 1 queue, 1 adjancy matrix.
+
+1.2 Known Bugs:
+
+Kruskal: None to the best of my knowledge.
+Prim: See comments in code; Not a bug, but my function was not fully implemented.
+
+1.3 Style Guidelines:
+Functions are all lower cased and seperated with underscores for multi-word functions.
+Union Find function is abbreviated to UF().
+Variables are camel cased.
+Indentation is done to conform to Python syntax requirements.
+
+1.4 Innovations:
+None that I can think of.
+
+1.5 Terminal Session Script and Source Code:
+See readme for screen cap; It is in the subdirectory.
+
+#===============================================================================
+# Programming Assignment 2, part A
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+import Queue
+import heapq
+
+
+
+def new_matrix(n):
+    
+    w = []
+    for i in range(0, n):
+        temp = []
+        for j in range(0, n):
+            temp.append(0)
+
+        w.append(temp)
+        
+    return w
+
+# print_matrix
+# prints the matrix w
+def print_matrix(w):
+
+    for i in w:
+        print i
+
+# int_matrix
+# converts a matrix of strings to matrix of ints
+def int_matrix(w):
+
+    for i in range(0, len(w)):
+        for j in range(0, len(w)):
+            w[i][j] = int(w[i][j])
+            
+    return w
+
+#===============================================================================
+#for i in range(0, len(temp)):
+#        for j in range(i, len(temp)):
+#                print "temp[", i,"][", j, "] is" , temp[i][j]
+#===============================================================================
+
+def prim(graph, w, root):
+
+    #for u in range(0, len(graph)):
+
+    #q = Queue.PriorityQueue()
+
+    q = []
+    
+    # from diagonol down, grab weights of edges
+    for i in range(0, len(graph)):
+        for j in range(i, len(graph)):
+            if graph[i][j] != 0:
+                t = (graph[i][j], i, j)
+                q.append(t)
+
+    
+    #sort edges
+    q.sort()
+
+    print "q is:", q
+
+    
+
+
+    # Read me please!
+    # Display of what prim is meant to do:
+    # Prim from here will visit each vertice adjacent to the root.
+    # This will continue recursivly until it reaching a previoulsy visited vertice.
+    # Prim will then backtrack to the top call, and visit a new vertice,
+    # continuing until all vertices are found.
+
+    # This can be implemented by going through the adjancy matrix and running through
+    # the matrix, visiting the i-th row after visiting a vertice.
+    while not q:
+        u = heapq.heappop(q)
+        #for v in 
+
+
+
+
+
+
+
+# note: graph file must contain weights in the undirected adj. matrix
+graphFile = open("graph_file.txt", "r") # get file
+
+temp = [] # Temp is the matrix that Prim will be run on.
+
+# split takes the line and splits the elements into seperate strings
+# adds the line to the matrix
+for line in graphFile:
+        temp.append(line.split())
+
+# converts the matrix of strings to ints
+int_matrix(temp)
+
+
+prim(temp, len(temp), 10)
+
+
+
+
+
+#notepad = { "key" : "first", "value" : "second"}
+#print "Keys are: " , notepad.keys()
+#print "Values are: " , notepad.values()
+
+#===============================================================================
+# Programming Assignment 2, part A
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+
+
+
+def new_matrix(n):
+    
+    w = []
+    for i in range(0, n):
+        temp = []
+        for j in range(0, n):
+            temp.append(0)
+
+        w.append(temp)
+        
+    return w
+
+
+
+
+
+class UF:
+        __id = []
+        __count = 0
+
+        def __init__(self, n):
+                self.__count = n
+
+                for i in range(0, n):
+                        self.__id.append(i)
+                        #print self.__id
+
+        def print_id(self):
+                return self.__id
+        
+        def count(self):
+                return self.__count
+
+
+
+        def find(self, p):
+                while p != self.__id[p]:
+                        p = self.__id[p]
+                return p
+                
+        
+        def connected(self, p, q):
+                return find(p) == find(q)
+
+        def union(self, p, q):
+                i = self.find(p)
+                j = self.find(q)
+                if i == j:
+                        return
+
+                self.__id[i] = j
+                __count = self.count() - 1
+
+
+
+def kruskal(graph, w):
+
+        q = [] # list to hold vertices
+
+        u = []
+        v = []
+        
+        A = []
+        temp_set = UF(w)
+
+        # from diagonol down, grab weights of edges
+        for i in range(0, len(graph)):
+                for j in range(i, len(graph)):
+                        if graph[i][j] != 0:
+                                t = (graph[i][j], i, j)
+                                q.append(t)
+
+
+        #sort edges
+        q.sort()
+
+        for i in range (0, len(q)):
+                u.append(q[i][1])
+
+        for i in range (0, len(q)):
+                v.append(q[i][2])
+
+                
+
+        #print "sorted q:" ,q
+        #print "u is:" ,u
+        #print "v is:" ,v
+
+        for e in range(0, len(q)):
+                if temp_set.find(u[e]) != temp_set.find(v[e]):
+                        A.append(q[e])
+                        temp_set.union(u[e], v[e])
+
+        #print "A is: ", A
+        
+        return A
+                
+        
+        
+
+# print_matrix
+# prints the matrix w
+def print_matrix(w):
+
+    for i in w:
+        print i
+
+# int_matrix
+# converts a matrix of strings to matrix of ints
+def int_matrix(w):
+
+    for i in range(0, len(w)):
+        for j in range(0, len(w)):
+            w[i][j] = int(w[i][j])
+            
+    return w
+
+
+
+
+
+
+# note: graph file must contain weights in the undirected adj. matrix
+graphFile = open("graph_file.txt", "r") # get file
+
+temp = [] # Temp is the matrix that Kruskal will be run on.
+
+# split takes the line and splits the elements into seperate strings
+# adds the line to the matrix
+for line in graphFile:
+        temp.append(line.split())
+
+# converts the matrix of strings to ints
+int_matrix(temp)
+
+
+
+
+mst = kruskal(temp, len(temp))
+
+
+final = new_matrix(len(mst) + 1)
+
+#construct final adj. list
+for i in range(0, len(mst)):
+        u = mst[i][1]
+        v = mst[i][2]
+        final[v][u] = 1
+        final[u][v] = 1
+        
+
+print "Final adj. matrix:"
+print_matrix(final)
+
+
+
+
+graphFile.close() # close file
+
+
+
+
+2.1 Program Implementation Description:
+My program is based off the implementation in the notes and text.
+It will run through the matrix in cubic time.
+
+2.2 Known bugs:
+None to the best of my knowledge. 
+NOTE: This is does use file IO; I didn't have time to implement it, but the test
+case is implemented as hard code.
+
+2.3 Style Guidelines:
+Functions are all lower cased and seperated with underscores for multi-word functions.
+Variables are camel cased.
+Indentation is done to conform to Python syntax requirements.
+
+2.4 Innovations:
+Input file uses the weights in place of the 1' on the adjancy matrix to simplify
+processing. 
+
+2.5 Terminal Session Script and Source Code:
+See readme for screen cap; It is in the subdirectory.
+
+
+#===============================================================================
+# Programming Assignment 2, part B
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+
+
+# new_matrix
+# creates a new n x n matrix initialized with 0
+def new_matrix(n):
+    
+    w = []
+    for i in range(0, n):
+        temp = []
+        for j in range(0, n):
+            temp.append(0)
+
+        w.append(temp)
+        
+    return w
+
+# print_matrix
+# prints the matrix w
+def print_matrix(w):
+
+    for i in w:
+        print i
+
+# int_matrix
+# converts a matrix of strings to matrix of ints
+def int_matrix(w):
+
+    for i in range(0, len(w)):
+        for j in range(0, len(w)):
+            w[i][j] = int(w[i][j])
+            
+    return w
+
+# floyd_w
+# executes floyd-warshall algo on a matrix w; prints intermediate steps
+def floyd_w(w):
+    n = len(w)
+
+    print "Initial" # print initial matrix
+    print_matrix(w)
+    
+    for m in range(0, n):   # n^3 algo
+        for i in range(0, n):
+            for j in range(0, n): # algo from notes
+                if w[i][m] + w[m][j] < w[i][j]:
+                    w[i][j] = w[i][m] + w[m][j]
+
+        print "m =" , m+1 #printing intermediate
+        print_matrix(w)
+                    
+
+#note, infinity is represented as 10,000 from the file
+graphFile = open("weightgraph.txt", "r") # get file
+
+
+temp = [] # Temp is the matrix
+
+
+# split takes the line and splits the elements into seperate strings
+# adds the line to the matrix
+for line in graphFile:
+    temp.append(line.split()) 
+
+# converts the matrix of strings to ints
+int_matrix(temp)
+
+# executes Floyd-Warshall on matrix
+floyd_w(temp)
+
+
+
+graphFile.close() # close file
+
+
+
+3.1 Program Implementation Description:
+My program is based off the implementation in the notes and text.
+It will run through the adjency list and output if it finds a biconnected comp.
+
+3.2 Known bugs:
+None to the best of my knowledge. 
+
+3.3 Style Guidelines:
+Functions are all lower cased and seperated with underscores for multi-word functions.
+Variables are camel cased.
+Indentation is done to conform to Python syntax requirements.
+
+3.4 Innovations:
+None that I can think of.
+
+3.5 Terminal Session Script and Source Code:
+See readme for screen cap; It is in the subdirectory.
+
+#===============================================================================
+# Programming Assignment 2, part C
+# Name: Chris Dang
+# x500 Login: dangx225
+# ID number: 5323765
+# Course: CSCI 4041-011
+# Professor: Nikolaos Papanikolopoulos
+#===============================================================================
+
+
+def main():
+    
+    global graph
+    graph = {}
+    graph['a'] = ['b', 'c', 'd']
+    graph['b'] = ['a', 'c']
+    graph['c'] = ['a', 'b']
+    graph['d'] = ['a']
+
+    biconnect_comp(graph)
+
+
+
+
+
+
+def biconnect_comp(graph):
+    
+    global count
+    count = 0
+    
+    global visited
+    visited = {}
+    global d
+    d = {}
+    global low
+    low = {}
+    global parent
+    parent = {}
+    global stack
+    stack = []
+
+
+    for x in sorted(graph):
+        visited[x] = False
+        parent[x] = None
+
+    for x in sorted(graph):
+        if not visited[x]:
+            DFS_visit(x)
+
+
+
+
+def output_comp(u,v):
+    print "New Binconneted Componented Found!"
+
+    while True:
+        e = stack.pop()
+        print e
+
+        if e == (u,v):
+            break
+
+
+
+def DFS_visit(u):
+
+    global count
+    
+    visited[u] = True
+    count = count + 1
+    
+    d[u] = count
+    low[u] = d[u]
+
+
+    
+    for v in sorted(graph):
+        if not visited[v]:
+            stack.append((u,v))
+            parent[v] = u
+            DFS_visit(v)
+            if low[v] >= d[u]:
+                output_comp(u,v)
+            low[u] = min(low[u],low[v])
+
+        elif not parent[u] == v and d[v] < d[u]:
+            stack.append((u,v))
+            low[u] = min(low[u],d[v])
+        
+
+
+
+
+
+
+    
+    #for v in 
+main()
+
+
+
+
+
+    
+    
+
+
+
+
+
+

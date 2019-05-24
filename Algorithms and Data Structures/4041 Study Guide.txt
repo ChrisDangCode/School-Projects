@@ -1,0 +1,168 @@
+Chris Dang
+
+CSCI 4041
+Algorithms and Data Structures
+
+Big-O notation - Worst case runtime, aka asymtotic upper bound.
+Big-Theta - Average case runtime.
+Big-Omega - Best case.
+
+Runtime list:
+O(1) - constant
+O(log n) - logarithmic
+O(n) - linear
+O(n^2) - quadratic
+O(n^3) - cubic
+O(n^c) - polynomial or algebraic
+O(c^n) - exponential
+O(n!) - factorial
+
+Binary search - O(log n)
+Sudo:
+cyclic_find(left, right):
+	if left == right:
+		return left
+	else:
+		middle = floor(1/2 * (left + right))
+		if a[middle] < a[right]:
+			temp = cyclic_find(left, middle)
+		else:
+			temp = cyclic_find(middle, right)
+			
+		return temp
+		
+Interpolation search - O(log log n)
+
+Insertion sort - O(n^2)
+*note, for small sets (<20) that are almost sorted, USE INSERT SORT. Nikos things.
+
+Bucket sort - O(n^2), Big-Omega, Big-theta(n+k)
+
+Radix sort - O(wn)
+Least Significant Digit (LSD) or MSD exist.
+Example:
+329		720 	720		329
+457		355		329		355
+657		436		436		436
+839	->	457	->	839	->	457
+436		657		355		657
+720		329		457		720
+355		839		657		839
+		  ^		 ^		^
+		  
+Mergesort - O(n log n)
+
+Quicksort - O(n^2), Big-Omega, Big-theta O(n log n)
+Sudo:
+Partition(A, left, right):
+	pivot = A[left]
+	l = left
+	r = right
+	while l < r:
+		while A[l] <= pivot and l <= right:
+			l = l+1
+		while A[r] >= pivot and r >= right:
+			r = r-1
+			
+		if l < r:
+			swap A[l] and A[r]
+	middle = r
+	swap A[left] and A[middle]
+
+	
+HEAPS
+	(Max) Heap property
+		- for every node i other than the root:
+			A[parent(i)] >= A[i]
+						
+	
+
+						
+						
+
+						
+Bellman-Ford Algo - O(V*E)
+	Finds shortest path from 1 node to all other nodes.
+	Can have negative edge weights, but can't have negative cycles
+	Bellman-Ford is NOT a greedy algo.
+	
+Dijkstra's also - O(E+VlogV)
+	Finds shortest path from 1 node to all other nodes.
+	Greedy algo.
+	
+	
+	
+Kruskals and Prims O(ElgE)
+
+Kruskals is edge driven.
+Prim's is Vertex driven.
+
+Use prims for a dense graph with lots of edges.
+
+DAG - Directed, Acyclic Graph
+- Digraph with no directed cycles.
+
+Topological sort
+- Given a DAG, put vertices in order such that all its
+directed edges point from vertex earlier in order to a vertex later
+in the order.
+Application - Job scheduling. 
+	
+	
+Floyd-Warshall algo - O(v^3)
+Find shorted path in graph with positive or negative weights.
+Output (along diagonal) is used to detect negative cycles.
+
+Finding Articulation Points
+- Perform DFS
+-Mark numerators of all vertices with the number they were reached
+- if vertex has no children, then denominator is the same as numerator
+- if vertex has children, denom is equal to lowest vertex you can reach while
+following DFS tree.
+- you can use at most 1 back edge and must stop immediately after using it
+- the root is an articulation point IFF it has at least 2 children.
+Only non-root vertex is an articulation point IFF its numerator is
+less than or equal to its child's denom.
+
+
+Gift-wrapping and Graham Scan
+- used to find convex hull
+Gift-wrapping is inefficient for more than 100 points
+Gift-wrapping tried to find best route before moving to next route.
+
+
+
+
+Bipartite graph - stable marriage problem
+
+
+Ford-Fulkerson method - 
+	1: initialize flow f to 0
+	2: while there exists an augmenting path p in the residual network G_f
+	3:		augment flow f along p
+	4: return f
+
+
+
+	
+Geometric - find all intersection
+	sort all x coordinates in increasing order and place in a queue
+	v = 0
+	while q is not empty:
+		remove first endpoint p from Queue.
+		if p is the right endpoint of h_k:
+			remove h_k from v
+		else if p is the left endpoint of h_k:
+			insert h_k into v
+			else if p is the x coordinate of a vertical line v_i:
+			 perform an 1-dimensional range query for range y_B(v_i) to y_T(v_i)
+
+y_B(v_i) to y_T(v_i) denote the bottom and top of y in line v_i
+			 
+	
+	
+	
+	
+	
+	
+	
