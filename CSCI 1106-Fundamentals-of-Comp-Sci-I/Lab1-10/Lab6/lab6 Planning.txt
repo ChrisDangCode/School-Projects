@@ -1,0 +1,113 @@
+Algorithm Programming Exercise
+Lab 6
+By Chris Dang
+
+Output:
+
+Type of vehicle: (Car, Truck, or Bus); string
+        Time-in: (2:23 P.M.); int : int string
+       Time-out: (6:08 P.M.); int : int string 	// you might want to use bools for A.M. / P.M. 
+	             ------------
+   Parking Time: (03:45); int : int
+  Rounded Total: (04); int
+  
+   Total Charge: ($ 1.50); double  //setw(5) at least
+   
+   
+   
+   
+Input:
+
+Type of vehicle? C					char
+Hour vehicle entered the lot     (0-24)? 14 		int
+Minute vehicle entered the lot   (0-60)? 23		int
+Hour vehicle left the lot        (0-24)? 18		int
+Minute vehicle left the lot      (0-60)? 8		int
+
+
+
+
+Process:
+
+////////////////////////// IGNORE /////////////////////////////////
+If vehicle = C, assign vehicle Car
+If vehicle = T, assign vehicle Truck
+If vehicle = B, assign vehicle Bus
+
+outputHour = timeOutHour - timeInHour
+if outputHour < 0   // in case someone parks over night, (from 5 A.M. to 2 A.M. next day) 
+	outputHour += 24  //adds 24 hours to outputHour if time is negative
+	
+outputMinute = timeOutMinute - timeInMinute
+////////////////////////// IGNORE /////////////////////////////////
+
+
+//determines the type of vehicle~~~~~~~~~~~~~~~~~~~~~
+If vehicle = C, assign vehicle Car
+If vehicle = T, assign vehicle Truck
+If vehicle = B, assign vehicle Bus
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+
+
+
+
+//Calculates parking time ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if timeOutMinute < timeInMinute
+	timeInHour -= 1			//subtract 1 hour to
+	timeOutMinute += 60 	//add 60 minutes so that minute subtraction results in positive number
+	
+if timeOutHour < timeInHour
+	timeOutHour += 24		//add 24 hours so that hour subtraction results in positive number
+
+outputMinute = timeOutMinute - timeInMinute
+
+outputHour = timeOutHour - timeInHour
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+
+
+
+//calculates rounded time~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if outputMinute > 0						// rounds parking time up to full hour
+	roundedTotal = outputHour + 1		// if the parking time is not a whole hour 
+else
+	roundedTotal = outputHour
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+CONSTANTS:
+CAR_RATE_1 = 0.00
+CAR_RATE_2 = 1.50		//Car is $1.50 per hour after 3 hours (hours > 3)
+TRUCK_RATE_1 = 1.00		//Truck is $1.00 per hour before 2 hours (hours < 2)
+TRUCK_RATE_2 = 2.30		//Truck is $2.30 per hour after 2 hours (hours > 2)
+BUS_RATE_1 = 2.00		//Bus is $2.00 per hour after 1 hour (hours < 1)
+BUS_RATE_2 = 3.70		//Bus is $3.70 per hour after 1 hour (hours > 1)
+
+CAR_FIRST_RATE_HOURS = 3
+TRUCK_FIRST_RATE_HOURS = 2
+BUS_FIRST_RATE_HOURS = 1
+	
+//calculates the Charge for parking time
+if vehicle == C,
+	vehicleOutput = Car
+	
+	if roundedTotal > CAR_FIRST_RATE_HOURS
+		charge = roundedTotal * CAR_RATE_2
+	else
+		charge = CAR_RATE_1
+
+if vehicle == T
+	vehicleOutput = Truck
+	
+	if roundedTotal > TRUCK_FIRST_RATE_HOURS
+		charge = (TRUCK_RATE_1 * TRUCK_FIRST_RATE_HOURS) + ((roundedTotal - TRUCK_FIRST_RATE_HOURS) * TRUCK_RATE_2)
+	else
+		charge = TRUCK_RATE_1 * roundedTotal
+
+if vehicle == B
+	vehicleOutput = Bus
+	
+	if roundedTotal > BUS_FIRST_RATE_HOURS
+		charge (BUS_RATE_1 * BUS_FIRST_RATE_HOURS) + ((roundedTotal - BUS_FIRST_RATE_HOURS) * BUS_RATE_2)
+	else
+		charge = BUS_RATE_1 * roundedTotal
+		

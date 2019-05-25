@@ -1,0 +1,73 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+
+//testing data for problem 2
+int main () {
+
+	int var1
+	char ch
+
+	cout << "Type in an integer. " ;
+	cin >> var1;
+	getline(cin,str);
+
+	cout << "Integer is: " ;
+	cout << " String is: "
+
+	return 0;
+
+
+}
+//end main
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*Planning for question 3
+
+Outputs needed:
+#Number of candy bars you can get
+#Number of gumballs you can get
+
+Inputs:
+Number of Tickets
+
+Process:
+Take number of tickets, modulus by 10. Get remainder and store into gumballTickets
+gumballs = gumballTickets / 3
+candybars = (totalTickets - gumballTickets) / 10
+
+Test Data: 56, 75, 9
+
+
+*/
+//End Planning 3~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*Planning for question 4
+
+Outputs:
+Amount of retroactive pay due to employee
+New Annual Salary
+New Monthly Salary
+
+Input:
+Employee's previous annual salary
+
+
+Process:
+Const payIncrease 0.076 (Workers gained 7.6% increase)
+
+Test Data: $40,000, $65,000, $20,300
+
+
+
+
+
+*/
+//End Planning 4~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

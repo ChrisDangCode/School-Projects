@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+
+int temperature, pressure;
+
+
+cout << "Enter Temp: ";
+cin >> temperature;
+
+cout << "Enter Pressure: ";
+cin >> pressure;
+cout << endl;
+
+if (temperature >= 100 || pressure >= 200)
+
+cout << "Warning" << endl << endl;
+
+else
+
+cout << "OK" << endl << endl;
+
+cout << "    Temp is: " << temperature << endl;
+cout << "Pressure is: " << pressure << endl << endl;
+
+
+}
+//END MAIN
