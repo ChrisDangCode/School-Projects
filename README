@@ -1,1 +1,24 @@
 This repo includes projects that I've created during my time at the University of Minnesota and/or at Anoka-Ramsey Community College.
+
+Folder Descriptions:
+--------------------------------------------------------------------------------
+Object-Oriented Programming Using Java - CSCI 1125: 
+- Introduces OOP concepts such as encapsulation, polymorphism, and inheritance.
+
+Algorithms and Data Structures - CSCI 4041: 
+- Covers Algorithm analysis, sorting algorithms, binary trees, heaps, priority queues, heapsort, dynamic programming, greedy algorithms, graphs, graph traversal, single source shortest path, minimum cost spanning trees, binary search trees, hash tables and hashing.
+
+Fundamentals of Computer Science I - CSCI 1106: 
+- Emphasis is on algorithm design, analysis, and refinement. Topics will include functions, control structures, static data structures, file manipulation, and recursion.
+
+Fundamentals of Computer Science II - CSCI 1107:
+- Elementary data structures such as lists, stacks, queues, trees and graphs are introduced. Software engineering principles are explored using C++. 
+
+Advanced Programming Principles - CSCI 2041: 
+- Principles/techniques for creating correct, robust, modular programs. Computing with symbolic data, recursion/induction, functional programming, impact of evaluation strategies, parallelism. Organizing data/computations around types. Search-based programming, concurrency, modularity.
+
+UI	Design,	Implementation & Evaluation - CSCI 5115:	
+- Theory, design, programming, and evaluation of interactive application interfaces. Human capabilities and limitations, interface design and engineering, prototyping and interface construction, interface evaluation, and topics such as data visualization and the World Wide Web.
+ 	
+Internet Programming - CSCI 4131: 
+Issues in internet programming. Internet history, architecture/protocols, network programming, Web architecture. Client-server architectures and protocols. Client-side programming, server-side programming, dynamic HTML, Java programming, object-oriented architecture/design, distributed object computing, Web applications.
